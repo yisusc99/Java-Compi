@@ -85,7 +85,7 @@ namespace LYA
             {"sealed",    -100 },
             {"string" ,   -101 },
             {"true" , -102 },
-            {"false" ,-103 },
+            {"false" ,-103 }
         };
        public Lexico(String textBox)
         {

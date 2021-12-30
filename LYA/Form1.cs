@@ -34,7 +34,7 @@ namespace LYA
            objSintactico.EjecutarSintactico(objSintactico.listaTokens);
 
             List<Error> listaErroresSintactico = objSintactico.listaError;
-            List<Error> listaErrores =  listaErroresLexico.Union(listaErroresLexico).ToList();
+            List<Error> listaErrores =  listaErroresLexico.Union(listaErroresSintactico).ToList();
 
             tablaLexico.DataSource = null;
             tablaLexico.DataSource = lista;
