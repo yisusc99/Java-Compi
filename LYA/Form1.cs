@@ -30,10 +30,10 @@ namespace LYA
             List<Error> listaErroresLexico = lexico.ErrorList;
             var lista = new BindingList<Token>(lexico.tokenList);
 
-          //  var objSintactico = new Sintactico(lexico.tokenList);
-          // objSintactico.EjecutarSintactico(objSintactico.listaTokens);
+           var objSintactico = new Sintactico(lexico.tokenList);
+           objSintactico.EjecutarSintactico(objSintactico.listaTokens);
 
-//            List<Error> listaErroresSintactico = objSintactico.listaError;
+            List<Error> listaErroresSintactico = objSintactico.listaError;
             List<Error> listaErrores =  listaErroresLexico.Union(listaErroresLexico).ToList();
 
             tablaLexico.DataSource = null;
