@@ -29,161 +29,139 @@ namespace LYA
         /// </summary>
         private void InitializeComponent()
         {
-            this.codigo = new System.Windows.Forms.TextBox();
             this.tablaLexico = new System.Windows.Forms.DataGridView();
             this.tablaTokens = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.Archivo = new System.Windows.Forms.ToolStripMenuItem();
-            this.Compilador = new System.Windows.Forms.ToolStripMenuItem();
-            this.run = new System.Windows.Forms.ToolStripMenuItem();
-            this.afd = new System.Windows.Forms.ToolStripMenuItem();
-            this.ttoken = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu = new System.Windows.Forms.MenuStrip();
             this.Ejecutar = new System.Windows.Forms.Button();
+            this.cajadeCodigo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tablaLexico)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablaTokens)).BeginInit();
-            this.menu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // codigo
-            // 
-            this.codigo.Location = new System.Drawing.Point(12, 62);
-            this.codigo.Multiline = true;
-            this.codigo.Name = "codigo";
-            this.codigo.Size = new System.Drawing.Size(487, 356);
-            this.codigo.TabIndex = 1;
             // 
             // tablaLexico
             // 
+            this.tablaLexico.AllowDrop = true;
+            this.tablaLexico.AllowUserToAddRows = false;
+            this.tablaLexico.AllowUserToDeleteRows = false;
+            this.tablaLexico.AllowUserToOrderColumns = true;
+            this.tablaLexico.AllowUserToResizeColumns = false;
+            this.tablaLexico.AllowUserToResizeRows = false;
+            this.tablaLexico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tablaLexico.BackgroundColor = System.Drawing.Color.White;
+            this.tablaLexico.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tablaLexico.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.tablaLexico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaLexico.Location = new System.Drawing.Point(505, 62);
+            this.tablaLexico.GridColor = System.Drawing.Color.LightGray;
+            this.tablaLexico.Location = new System.Drawing.Point(22, 386);
             this.tablaLexico.Name = "tablaLexico";
+            this.tablaLexico.ReadOnly = true;
+            this.tablaLexico.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.tablaLexico.RowTemplate.Height = 25;
-            this.tablaLexico.Size = new System.Drawing.Size(388, 150);
+            this.tablaLexico.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tablaLexico.ShowCellToolTips = false;
+            this.tablaLexico.Size = new System.Drawing.Size(395, 156);
             this.tablaLexico.TabIndex = 2;
             // 
             // tablaTokens
             // 
+            this.tablaTokens.AllowDrop = true;
+            this.tablaTokens.AllowUserToAddRows = false;
+            this.tablaTokens.AllowUserToDeleteRows = false;
+            this.tablaTokens.AllowUserToOrderColumns = true;
+            this.tablaTokens.AllowUserToResizeColumns = false;
+            this.tablaTokens.AllowUserToResizeRows = false;
+            this.tablaTokens.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tablaTokens.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.tablaTokens.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tablaTokens.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.tablaTokens.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaTokens.Location = new System.Drawing.Point(505, 268);
+            this.tablaTokens.GridColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tablaTokens.Location = new System.Drawing.Point(506, 386);
             this.tablaTokens.Name = "tablaTokens";
+            this.tablaTokens.ReadOnly = true;
+            this.tablaTokens.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.tablaTokens.RowTemplate.Height = 25;
-            this.tablaTokens.Size = new System.Drawing.Size(387, 150);
+            this.tablaTokens.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tablaTokens.Size = new System.Drawing.Size(387, 154);
             this.tablaTokens.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(505, 41);
+            this.label1.Location = new System.Drawing.Point(22, 367);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 15);
+            this.label1.Size = new System.Drawing.Size(44, 14);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Lexema";
+            this.label1.Text = "Tokens";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(505, 250);
+            this.label2.Location = new System.Drawing.Point(506, 367);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 15);
+            this.label2.Size = new System.Drawing.Size(44, 14);
             this.label2.TabIndex = 5;
             this.label2.Text = "Errores";
             // 
-            // Archivo
-            // 
-            this.Archivo.Name = "Archivo";
-            this.Archivo.Size = new System.Drawing.Size(60, 20);
-            this.Archivo.Text = "Archivo";
-            // 
-            // Compilador
-            // 
-            this.Compilador.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.run,
-            this.afd,
-            this.ttoken});
-            this.Compilador.Name = "Compilador";
-            this.Compilador.Size = new System.Drawing.Size(82, 20);
-            this.Compilador.Text = "Compilador";
-            // 
-            // run
-            // 
-            this.run.Name = "run";
-            this.run.Size = new System.Drawing.Size(160, 22);
-            this.run.Text = "Ejecutar";
-            // 
-            // afd
-            // 
-            this.afd.Name = "afd";
-            this.afd.Size = new System.Drawing.Size(160, 22);
-            this.afd.Text = "Automata Finito";
-            // 
-            // ttoken
-            // 
-            this.ttoken.Name = "ttoken";
-            this.ttoken.Size = new System.Drawing.Size(160, 22);
-            this.ttoken.Text = "Tabla de Tokens";
-            // 
-            // menu
-            // 
-            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Archivo,
-            this.Compilador});
-            this.menu.Location = new System.Drawing.Point(0, 0);
-            this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(1132, 24);
-            this.menu.TabIndex = 6;
-            this.menu.Text = "menu";
-            this.menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menu_ItemClicked);
-            // 
             // Ejecutar
             // 
-            this.Ejecutar.Location = new System.Drawing.Point(12, 27);
+            this.Ejecutar.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.Ejecutar.FlatAppearance.BorderColor = System.Drawing.Color.CadetBlue;
+            this.Ejecutar.FlatAppearance.BorderSize = 2;
+            this.Ejecutar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Ejecutar.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Ejecutar.ForeColor = System.Drawing.Color.White;
+            this.Ejecutar.Location = new System.Drawing.Point(22, 10);
             this.Ejecutar.Name = "Ejecutar";
-            this.Ejecutar.Size = new System.Drawing.Size(75, 23);
+            this.Ejecutar.Size = new System.Drawing.Size(98, 32);
             this.Ejecutar.TabIndex = 7;
             this.Ejecutar.Text = "Ejecutar";
-            this.Ejecutar.UseVisualStyleBackColor = true;
+            this.Ejecutar.UseVisualStyleBackColor = false;
             this.Ejecutar.Click += new System.EventHandler(this.Ejecutar_Click);
+            // 
+            // cajadeCodigo
+            // 
+            this.cajadeCodigo.BackColor = System.Drawing.Color.White;
+            this.cajadeCodigo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cajadeCodigo.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cajadeCodigo.ForeColor = System.Drawing.Color.Black;
+            this.cajadeCodigo.Location = new System.Drawing.Point(22, 49);
+            this.cajadeCodigo.Name = "cajadeCodigo";
+            this.cajadeCodigo.Size = new System.Drawing.Size(901, 296);
+            this.cajadeCodigo.TabIndex = 8;
+            this.cajadeCodigo.Text = "";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
+            this.ClientSize = new System.Drawing.Size(932, 552);
+            this.Controls.Add(this.cajadeCodigo);
             this.Controls.Add(this.Ejecutar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tablaTokens);
             this.Controls.Add(this.tablaLexico);
-            this.Controls.Add(this.codigo);
-            this.Controls.Add(this.menu);
-            this.MainMenuStrip = this.menu;
+            this.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.tablaLexico)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablaTokens)).EndInit();
-            this.menu.ResumeLayout(false);
-            this.menu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox codigo;
         private System.Windows.Forms.DataGridView tLexico;
         private System.Windows.Forms.DataGridView tablaTokens;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStripMenuItem Archivo;
-        private System.Windows.Forms.ToolStripMenuItem Compilador;
-        private System.Windows.Forms.ToolStripMenuItem run;
-        private System.Windows.Forms.ToolStripMenuItem afd;
-        private System.Windows.Forms.ToolStripMenuItem ttoken;
-        private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.Button Ejecutar;
         private System.Windows.Forms.DataGridView tablaLexico;
+        private System.Windows.Forms.RichTextBox cajadeCodigo;
     }
 }
 

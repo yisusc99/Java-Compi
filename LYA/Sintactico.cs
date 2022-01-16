@@ -409,8 +409,6 @@ namespace LYA
             {
                 if (tokenReglas[i] == regla)
                 {
-                    Console.WriteLine(tokenReglas[i]);
-                    Console.WriteLine(regla);
                     renglon = i;
                     break;
                 }

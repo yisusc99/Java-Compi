@@ -24,8 +24,8 @@ namespace LYA
 
         private void Ejecutar_Click(object sender, EventArgs e)
         {
-            var lexico = new Lexico(codigo.Text);
-            lexico.ejecutarLexico();
+            var lexico = new Lexico(cajadeCodigo.Text);
+            lexico.runLexicon();
 
             List<Error> listaErroresLexico = lexico.ErrorList;
             var lista = new BindingList<Token>(lexico.tokenList);
