@@ -21,7 +21,25 @@ namespace LYA
 
         int punteroLexico = 0;      // punteros de la lista de tokens y de la lista del analizador sintactico
         int punteroSintactico = 1;
-
+        enum TipoSemantico
+        {
+            Ninguno,
+            ClaseIN,
+            ClassOUT,
+            HerenciaIN,
+            HerenciaOUT,
+            ParametrosIN,
+            ParametrosOUT,
+            MetodoIN,
+            MetodoOUT,
+            AtributosIN,
+            ATributosOUT,
+            VariablesIN,
+            VariablesOUT,
+            AsignacionIN,
+            AsignacionOUT
+        }
+        TipoSemantico swSemantico;
         int intentosRecuperar;
         TipoRepecuracion tipoRecuperacion;
         enum TipoRepecuracion
@@ -307,6 +325,7 @@ namespace LYA
             int regla;
             do
             {
+                Escuchador();
                 if (listaSintactico[punteroSintactico] < 0)   // el elemento de la lista es un terminal (TOKEN)????
                 {
                     if (listaSintactico[punteroSintactico] == -99)// es lamda ese terminal?
@@ -329,8 +348,8 @@ namespace LYA
                         else    //MATCH (elemento)
                         {
                             //CODIDO ESCUCHADOR  ACTIVADO ALGUN MODO IN
-                            //if (swSemantico != TipoSemantico.Ninguno)
-                            //    CodigoSemantico();
+                            if (swSemantico != TipoSemantico.Ninguno)
+                                CodigoSemantico();
 
                             listaSintactico[punteroSintactico] = 0;
                             punteroLexico++;
@@ -509,6 +528,104 @@ namespace LYA
                     break;
             }
         }
+        private void Escuchador() {
+            switch (listaSintactico[punteroSintactico]){
+                case 1007: // regla de la clase
+                swSemantico = TipoSemantico.ClaseIN; //{
+                break;
+                //case 1008: // regla de la metodos
+                // swSemantico = TipoSemantico.MetodoIN; //{
+                // break;
+                //case 1009: // regla de la atributos
+                // swSemantico = TipoSemantico.AtributosIN; //;
+                // break;
+                //case 1010: // regla de la parametros
+                // swSemantico = TipoSemantico.ParametrosIN; //;
+                // break;
+                //case 1020:
+                // swSemantico = TipoSemantico.AsignacionIN; //;
+                // break;
+                default:
+                break;
+            }
+        }
+
+    private void CodigoSemantico(){
+            //CAPTURA el token de sintactico a la lista temporal
+            listenerSemantico.Add(listaTokens[punteroLexico]);
+            if (listaTokens[punteroLexico].ValorToken == -8 && swSemantico == TipoSemantico.ClaseIN)
+            {
+                swSemantico = TipoSemantico.ClassOUT;
+            }
+            if (listaTokens[punteroLexico].ValorToken == -8 && swSemantico == TipoSemantico.MetodoIN)
+            {
+                swSemantico = TipoSemantico.MetodoOUT;
+            }
+            if (listaTokens[punteroLexico].ValorToken == -15 && swSemantico == TipoSemantico.ParametrosIN)
+            {
+                swSemantico = TipoSemantico.ParametrosOUT;
+            }
+            //desmenuzando ya la lista de tokens temporal para clase
+            if (swSemantico == TipoSemantico.ClassOUT)
+            {
+              int puntero2 = 0;
+              NodoClase minodoClase = new NodoClase();
+                if (listenerSemantico[puntero2].ValorToken < -50 && listenerSemantico[puntero2].ValorToken > -56)
+                {
+                    switch (listenerSemantico[puntero2].ValorToken){
+                        case -51:
+                        minodoClase.MiAlcance = Alcance.Public;
+                        break;
+                        case -52:
+                        minodoClase.MiAlcance = Alcance.Private;
+                        break;
+                        case -53:
+                        minodoClase.MiAlcance = Alcance.Static;
+                        break;
+                        case -54:
+                        minodoClase.MiAlcance = Alcance.Protected;
+                        break;
+                        case -55:
+                        minodoClase.MiAlcance = Alcance.Sealed;
+                        break;
+                        default:
+                        break;
+                    }
+                    puntero2++;
+                }
+                else{
+                    minodoClase.MiAlcance = Alcance.Private;
+                }
+                    puntero2++; // class
+                    minodoClase.Lexema =
+                    listenerSemantico[puntero2].Lexema;
+                    puntero2++; //:
+                if (listenerSemantico[puntero2].ValorToken == -12) {
+                    puntero2++;
+                    minodoClase.Herencia =
+                    listenerSemantico[puntero2].Lexema;
+                    //compruebo la existencia de la clase heredar
+                    TablaSimbolos.ExisteClaseHeredada(listenerSemantico[puntero2].Lexema);
+                    puntero2++;
+                }
+                if (listenerSemantico[puntero2].ValorToken == -8) //{
+                {
+                    minodoClase.RenglonDeclaracion =
+                    listenerSemantico[puntero2].Linea;
+                    //despues de termiar de analizar el codigo entonces insertamos clase.
+                    TablaSimbolos.InsertarNodoClase(minodoClase);
+                    listenerSemantico = new List<Token>();
+                    swSemantico = TipoSemantico.Ninguno;
+                    puntero2 = 0;
+                }
+            }
+            //desmenuzar lista de tokens temporal para crear un nodo atributo
+            if (swSemantico == TipoSemantico.ATributosOUT){
+                // insertar un modo atributo
+            }
+
+        }
+    }
     }
 }
 

@@ -8,7 +8,8 @@ namespace LYA
 {
         public enum tipoError { 
             Lexico,
-            Sintactico
+            Sintactico,
+            Semantico
         }
 
     public class Error {

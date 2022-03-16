@@ -55,92 +55,18 @@ namespace Compilador
         private string herencia; // lexema de clase a heredar
         private int renglonDeclaracion;
         private int[] referencias;
+        private Dictionary<string, NodoAtributo> tablaSimbolosAtributos = new Dictionary<string, NodoAtributo>();
 
-        private Dictionary<string, NodoAtributo> tablaSimbolosAtributos = 
-            new Dictionary<string, NodoAtributo>();
+        private Dictionary<string, NodoMetodo> tablaSimbolosMetodos = new Dictionary<string, NodoMetodo>();
 
-        private Dictionary<string, NodoMetodo> tablaSimbolosMetodos =
-            new Dictionary<string, NodoMetodo>();
+        public string Lexema { get => lexema; set => lexema = value; }
+        public Alcance MiAlcance { get => miAlcance; set => miAlcance = value; }
+        public string Herencia { get => herencia; set => herencia = value; }
+        public int RenglonDeclaracion { get => renglonDeclaracion; set => renglonDeclaracion = value; }
+        public int[] Referencias { get => referencias; set => referencias = value; }
+        public Dictionary<string, NodoAtributo> TSA { get => tablaSimbolosAtributos; set => tablaSimbolosAtributos = value; }
+        public Dictionary<string, NodoAtributo> TSM { get => tablaSimbolosMetodos; set => tablaSimbolosMetodos = value; }
 
-        public string Lexema { get{ return lexema;}
-
-            set
-            {
-                lexema = value;
-            }
-        }
-        public Alcance MiAlcance
-        {
-            get
-            {
-                return miAlcance;
-            }
-
-            set
-            {
-                miAlcance = value;
-            }
-        }
-        public string Herencia
-        {
-            get
-            {
-                return herencia;
-            }
-
-            set
-            {
-                herencia = value;
-            }
-        }
-        public int RenglonDeclaracion
-        {
-            get
-            {
-                return renglonDeclaracion;
-            }
-
-            set
-            {
-                renglonDeclaracion = value;
-            }
-        }
-        public int[] Referencias
-        {
-            get
-            {
-                return referencias;
-            }
-
-            set
-            {
-                referencias = value;
-            }
-        }
-        public Dictionary<string, NodoAtributo> TSA
-        {
-            get
-            {
-                return tablaSimbolosAtributos;
-            }
-
-            set
-            {
-                tablaSimbolosAtributos = value;
-            }
-        }
-        public Dictionary<string, NodoMetodo> TSM
-        {
-            get
-            {
-                return tablaSimbolosMetodos;
-            }
-
-            set
-            {
-                tablaSimbolosMetodos = value;
-            }
-        }
     }
     public class NodoAtributo
     {
@@ -170,8 +96,7 @@ namespace Compilador
         public int renglonDeclaracion;
         public int[] referencias;
 
-        public Dictionary<object, NodoVariable> TablaSimbolosVariables =
-            new Dictionary<object, NodoVariable>();
+        public Dictionary<object, NodoVariable> TablaSimbolosVariables = new Dictionary<object, NodoVariable>();
     }   
     
    static public class TablaSimbolos
@@ -180,24 +105,12 @@ namespace Compilador
               
         //dicionario de datos como una tabla de simbolos
         //tabla de simbolos raiz (principal)
-        private static Dictionary<object, NodoClase> tablaSimbolosClase =
-            new Dictionary<object, NodoClase>();
+        private static Dictionary<object, NodoClase> tablaSimbolosClase = new Dictionary<object, NodoClase>();
 
         /// <summary>
         /// propiedades del diccionario de nodo clases
         /// </summary>
-        public static Dictionary<object, NodoClase> TablaSimbolosClase
-        {
-            get
-            {
-                return tablaSimbolosClase;
-            }
-
-            set
-            {
-                tablaSimbolosClase = value;
-            }
-        }
+        public static Dictionary<object, NodoClase> TablaSimbolosClase { get => tablaSimbolosClase; set => tablaSimbolosClase = value }
 
         #region METODOS para TS de CLASES
 
@@ -207,13 +120,13 @@ namespace Compilador
         /// <param name="miNodoClase">nodo clase</param>
         static public void InsertarNodoClase(NodoClase miNodoClase)
         {           
-                if (!TablaSimbolosClase.ContainsKey(miNodoClase.Lexema)) // verificar una colision
+                if (!TablaSimbolosClase.ContainsKey(miNodoClase.Lexema)) // verificar colision de clases
                 {
                     TablaSimbolosClase.Add(miNodoClase.Lexema, miNodoClase);
                 }
                 else
                 {
-                    var error = new Error() { Codigo = 601, Linea = miNodoClase.RenglonDeclaracion, MensajeError = "Ya existe una implementacion con ese identificador", Tipo = tipoError.Semantico };
+                    var error = new Error() { Codigo = 601, Linea = miNodoClase.RenglonDeclaracion, MensajeError = "Ya existe una clase con ese nombre", Tipo = tipoError.Semantico };
                     TablaSimbolos.listaErroresSemantico.Add(error);
                 }          
         }
@@ -226,7 +139,7 @@ namespace Compilador
             }
             else
             {
-                var error = new Error() { Codigo = 602, Linea = 0, MensajeError = "No existe en el contexto una clase con ese nombre", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 602, Linea = 0, MensajeError = "No existe una clase con ese nombre en el contexto actual", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
                 return null;               
             }
@@ -253,21 +166,19 @@ namespace Compilador
             }
             else
             {
-                var error = new Error() { Codigo = 601, Linea = miNodoAtributo.reglonDec, MensajeError = "Ya existe un miembro con ese identificador", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 601, Linea = miNodoAtributo.reglonDec, MensajeError = "Ya existe un atributo con ese identificador", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
             }
 
         }
         static public NodoAtributo ObtenerNodoAtributo(string lexema, NodoClase nodoClaseActiva, int linea)
         {
-            if (nodoClaseActiva.TSA
-               .ContainsKey(lexema))
-                return nodoClaseActiva
-                    .TSA
-                    .SingleOrDefault(x => x.Key == lexema).Value;
+            if (nodoClaseActiva.TSA.ContainsKey(lexema)) { 
+                return nodoClaseActiva.TSA.SingleOrDefault(x => x.Key == lexema).Value;
+            }
             else
             {
-                var error = new Error() { Codigo = 601, Linea = 0, MensajeError = "No se Encontro el atributo en el contexto actual", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 601, Linea = 0, MensajeError = "No se encontro el atributo en el contexto actual", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
                 return null;
             }
@@ -281,7 +192,7 @@ namespace Compilador
             }
             else
             {
-                var error = new Error() { Codigo = 601, Linea = 0, MensajeError = "No se Encontro el atributo en el contexto actual", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 601, Linea = 0, MensajeError = "No se encontro el atributo en el contexto actual", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
                 return TipoDato.NADA;
             }
@@ -289,9 +200,8 @@ namespace Compilador
 
         public static string ObtenerDireccionMemoriaRam(string lexemaAtributo, NodoClase nodoClaseActiva)
         {
-            var resultado =
-                nodoClaseActiva.TSA.FirstOrDefault(x => x.Key == lexemaAtributo).Value.direccionMemoria;
-            return resultado;
+            //var resultado = nodoClaseActiva.TSA.FirstOrDefault(x => x.Key == lexemaAtributo).Value.direccionMemoria;
+            return nodoClaseActiva.TSA.FirstOrDefault(x => x.Key == lexemaAtributo).Value.direccionMemoria;
 
         }
 
@@ -324,7 +234,7 @@ namespace Compilador
             }
             else
             {
-                var error = new Error() { Codigo = 604, Linea = miNodoMetodo.renglonDeclaracion, MensajeError = "Tu nombre de metodo no puede llamarse como el nombre de la clase", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 604, Linea = miNodoMetodo.renglonDeclaracion, MensajeError = "El metodo no puede llamarse como la clase", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);                
             }
         }
@@ -353,7 +263,7 @@ namespace Compilador
         {
             if (!nodoClaseActiva.TSM.ContainsKey(lexema))
             {
-                var error = new Error() { Codigo = 605, Linea = linea, MensajeError = "Nombre de metodo a invocar inexistente", Tipo = tipoError.Semantico };
+                var error = new Error() { Codigo = 605, Linea = linea, MensajeError = "Metodo invocado inexistente en el contexto actual", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
             }
             else
