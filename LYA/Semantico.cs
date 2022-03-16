@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compilador
+namespace LYA
 {
    
     public enum Alcance
@@ -14,29 +14,33 @@ namespace Compilador
         Static,
         Protected,
         Sealed, 
-        Abstract
+        Abstract,
+        Final,
+        Transient,
+        Volatile,
+        Const
     }
     public enum TipoDato
     {
-        INT,
-        STRING,
-        DOUBLE,
-        CHAR,
-        BOOL,
-        OBJECT,
-        BYTE,
-        NULO
+        Int,
+        String,
+        Double,
+        Char,
+        Bool,
+        Object,
+        Byte,
+        Nulo
     }
     public enum Regreso
     {
-        INT,
-        STRING,
-        DOUBLE,
-        CHAR,
-        BOOL,
-        OBJECT,
-        BYTE,
-        VOID        
+        Int,
+        String,
+        Double,
+        Char,
+        Bool,
+        Object,
+        Byte,
+        Nulo
     }
     public enum TipoVariable
     {
@@ -65,7 +69,7 @@ namespace Compilador
         public int RenglonDeclaracion { get => renglonDeclaracion; set => renglonDeclaracion = value; }
         public int[] Referencias { get => referencias; set => referencias = value; }
         public Dictionary<string, NodoAtributo> TSA { get => tablaSimbolosAtributos; set => tablaSimbolosAtributos = value; }
-        public Dictionary<string, NodoAtributo> TSM { get => tablaSimbolosMetodos; set => tablaSimbolosMetodos = value; }
+        public Dictionary<string, NodoMetodo> TSM { get => tablaSimbolosMetodos; set => tablaSimbolosMetodos = value; }
 
     }
     public class NodoAtributo
@@ -102,7 +106,6 @@ namespace Compilador
    static public class TablaSimbolos
     {
         static public List<Error> listaErroresSemantico;
-              
         //dicionario de datos como una tabla de simbolos
         //tabla de simbolos raiz (principal)
         private static Dictionary<object, NodoClase> tablaSimbolosClase = new Dictionary<object, NodoClase>();
@@ -110,7 +113,7 @@ namespace Compilador
         /// <summary>
         /// propiedades del diccionario de nodo clases
         /// </summary>
-        public static Dictionary<object, NodoClase> TablaSimbolosClase { get => tablaSimbolosClase; set => tablaSimbolosClase = value }
+        public static Dictionary<object, NodoClase> TablaSimbolosClase { get => tablaSimbolosClase; set => tablaSimbolosClase = value; }
 
         #region METODOS para TS de CLASES
 
@@ -194,7 +197,7 @@ namespace Compilador
             {
                 var error = new Error() { Codigo = 601, Linea = 0, MensajeError = "No se encontro el atributo en el contexto actual", Tipo = tipoError.Semantico };
                 TablaSimbolos.listaErroresSemantico.Add(error);
-                return TipoDato.NADA;
+                return TipoDato.Nulo;
             }
         }
 
@@ -308,11 +311,11 @@ namespace Compilador
             {
                 
                 //return nodoClaseActiva.TSM.SingleOrDefault(x => x.Key == nombreMetodoActivo).Value.TablaSimbolosVariables.Values.SingleOrDefault(x => x.lexema == lexamaVariable).miTipoDato;
-                return TipoDato.INT;
+                return TipoDato.Int;
             }
             catch (Exception)
             {
-                return TipoDato.INT;
+                return TipoDato.Int;
             }
         }
         

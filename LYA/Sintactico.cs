@@ -40,6 +40,7 @@ namespace LYA
             AsignacionOUT
         }
         TipoSemantico swSemantico;
+        public List<Token> listenerSemantico = new List<Token>();
         int intentosRecuperar;
         TipoRepecuracion tipoRecuperacion;
         enum TipoRepecuracion
@@ -530,21 +531,29 @@ namespace LYA
         }
         private void Escuchador() {
             switch (listaSintactico[punteroSintactico]){
-                case 1007: // regla de la clase
-                swSemantico = TipoSemantico.ClaseIN; //{
+                case 1009: // regla de la clase
+                    swSemantico = TipoSemantico.ClaseIN; //{
                 break;
-                //case 1008: // regla de la metodos
-                // swSemantico = TipoSemantico.MetodoIN; //{
-                // break;
-                //case 1009: // regla de la atributos
-                // swSemantico = TipoSemantico.AtributosIN; //;
-                // break;
-                //case 1010: // regla de la parametros
-                // swSemantico = TipoSemantico.ParametrosIN; //;
-                // break;
-                //case 1020:
-                // swSemantico = TipoSemantico.AsignacionIN; //;
-                // break;
+
+                case 1016: // regla de la metodos
+                    swSemantico = TipoSemantico.MetodoIN; //{
+                break;
+
+                case 1023: // regla de la atributos
+                    swSemantico = TipoSemantico.AtributosIN; //;
+                break;
+
+                case 1026: // regla de la atributos objeto
+                    swSemantico = TipoSemantico.AtributosIN; //;
+                break;
+
+                case 1017: // regla de la parametros
+                    swSemantico = TipoSemantico.ParametrosIN; //;
+                break;
+
+                case 1024: //asignacion de valores
+                    swSemantico = TipoSemantico.AsignacionIN; //
+                break;
                 default:
                 break;
             }
